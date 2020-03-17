@@ -3,8 +3,6 @@ const bodyParser = require('body-parser');
 
 const promotionRouter = express.Router();
 
-
-
 promotionRouter.use(bodyParser.json());
 // Chain route method
 promotionRouter.route('/')
@@ -33,22 +31,19 @@ promotionRouter.route('/:promotionId')
     res.setHeader('Content-Type', 'text/plain');
     next();
 })
-.get('/:promotionId', (req, res) => {
+.get((req, res) => {
     res.end(`Will send details of the promotion: ${req.params.promotionId} to you`);
 })
-
-.post('/:promotionId', (req, res) => {
+.post((req, res) => {
     res.statusCode = 403;
     res.end(`POST operation not supported on /promotions/${req.params.promotionId}`);
 })
-
-.put('/:promotionId', (req, res) => {
+.put((req, res) => {
     res.write(`Updating the promotion: ${req.params.promotionId}\n`);
     res.end(`Will update the promotion: ${req.body.name}
         with description: ${req.body.description}`);
 })
-
-.delete('/:promotionId', (req, res) => {
+.delete((req, res) => {
     res.end(`Deleting promotion: ${req.params.promotionId}`);
 });
 

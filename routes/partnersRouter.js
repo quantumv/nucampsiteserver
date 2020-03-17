@@ -3,8 +3,6 @@ const bodyParser = require('body-parser');
 
 const partnersRouter = express.Router();
 
-
-
 partnersRouter.use(bodyParser.json());
 // Chain route method
 partnersRouter.route('/')
@@ -26,7 +24,6 @@ partnersRouter.route('/')
 .delete((req, res) => {
     res.end('Deleting all partners');
 });
-
 //Workshop add-on
 partnersRouter.route('/:partnersId')
 .all((req, res, next) => {
@@ -34,22 +31,19 @@ partnersRouter.route('/:partnersId')
     res.setHeader('Content-Type', 'text/plain');
     next();
 })
-.get('/:partnersId', (req, res) => {
+.get((req, res) => {
     res.end(`Will send details of the partners: ${req.params.partnersId} to you`);
 })
-
-.post('/:partnersId', (req, res) => {
+.post((req, res) => {
     res.statusCode = 403;
     res.end(`POST operation not supported on /partners/${req.params.partnersId}`);
 })
-
-.put('/:partnersId', (req, res) => {
+.put((req, res) => {
     res.write(`Updating the partners: ${req.params.partnersId}\n`);
     res.end(`Will update the partners: ${req.body.name}
         with description: ${req.body.description}`);
 })
-
-.delete('/:partnersId', (req, res) => {
+.delete((req, res) => {
     res.end(`Deleting partners: ${req.params.partnersId}`);
 });
 
