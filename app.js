@@ -9,8 +9,21 @@ var usersRouter = require('./routes/users');
 //Implement a REST API Exercise: Express Generator//
 const campsiteRouter = require('./routes/campsiteRouter');
 const promotionRouter = require('./routes/promotionRouter');
-const partnerRouter = require('./routes/partnerRouter');
+const partnersRouter = require('./routes/partnersRouter');
 
+const mongoose = require('mongoose');
+
+const url = 'mongodb://localhost:27017/nucampsite';
+const connect = mongoose.connect(url, {
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useNewUrlParser: true, 
+    useUnifiedTopology: true
+});
+
+connect.then(() => console.log('Connected correctly to server'), 
+    err => console.log(err)
+);
 
 var app = express();
 
@@ -29,7 +42,7 @@ app.use('/users', usersRouter);
 //Implement a REST API Exercise: Express Generator//
 app.use('/campsites', campsiteRouter);
 app.use('/promotions', promotionRouter);
-app.use('/partners', partnerRouter);
+app.use('/partners', partnersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
