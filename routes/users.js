@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/user');
+const passport = require('passport');
 
 const router = express.Router();
 
@@ -33,7 +34,6 @@ router.post('/signup', (req, res, next) => {
 router.post('/login', (req, res, next) => {
   if(!req.session.user) {
       const authHeader = req.headers.authorization;
-
       if (!authHeader) {
           const err = new Error('You are not authenticated!');
           res.setHeader('WWW-Authenticate', 'Basic');
@@ -81,6 +81,5 @@ router.get('/logout', (req, res, next) => {
     return next(err);
   }
 });
-
 
 module.exports = router;
