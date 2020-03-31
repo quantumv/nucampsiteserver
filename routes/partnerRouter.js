@@ -3,11 +3,11 @@ const bodyParser = require('body-parser');
 const Partner = require('../models/partner');
 const authenticate = require('../authenticate');
 
-const partnersRouter = express.Router();
+const partnerRouter = express.Router();
 
-partnersRouter.use(bodyParser.json());
+partnerRouter.use(bodyParser.json());
 // Chain route method
-partnersRouter.route('/')
+partnerRouter.route('/')
 .get((req, res, next) => {
     Partner.find()
     .then(partners => {
@@ -18,11 +18,11 @@ partnersRouter.route('/')
 })
 .post(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Partner.create(req.body)
-    .then(partner => {
-        console.log('Partner Created ', partner);
+    .then(partners => {
+        console.log('Partners Created ', partner);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(partner);
+        res.json(partners);
     })
     .catch(err => next(err));
 })
@@ -43,10 +43,10 @@ partnersRouter.route('/')
 partnerRouter.route('/:partnerId')
 .get((req, res, next) => {
     Partner.findById(req.params.partnerId)
-    .then(partner => {
+    .then(partners => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(partner);
+        res.json(partners);
     })
     .catch(err => next(err));
 })
@@ -58,10 +58,10 @@ partnerRouter.route('/:partnerId')
     Partner.findByIdAndUpdate(req.params.partnerId, {
         $set: req.body
     }, { new: true })
-    .then(partner => {
+    .then(partners => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(partner);
+        res.json(partners);
     })
     .catch(err => next(err));
 })

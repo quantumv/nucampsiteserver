@@ -11,7 +11,7 @@ const usersRouter = require('./routes/users');
 //Implement a REST API Exercise: Express Generator//
 const campsiteRouter = require('./routes/campsiteRouter');
 const promotionRouter = require('./routes/promotionRouter');
-const partnersRouter = require('./routes/partnersRouter');
+const partnerRouter = require('./routes/partnerRouter');
 
 const mongoose = require('mongoose');
 
@@ -28,6 +28,16 @@ connect.then(() => console.log('Connected correctly to server'),
 );
 
 const app = express();
+
+// Secure traffic only // From bin/www Directing traffic from insecure port to secure port.
+app.all('*', (req, res, next) => {
+  if (req.secure) {
+    return next();
+  } else {
+      console.log(`Redirecting to: https://${req.hostname}:${app.get('secPort')}${req.url}`);
+      res.redirect(301, `https://${req.hostname}:${app.get('secPort')}${req.url}`);
+  }
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -48,7 +58,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Implement a REST API Exercise: Express Generator//
 app.use('/campsites', campsiteRouter);
 app.use('/promotions', promotionRouter);
-app.use('/partners', partnersRouter);
+app.use('/partners', partnerRouter);
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {
