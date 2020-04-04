@@ -6,7 +6,7 @@ const cors = require('./cors');
 
 const partnerRouter = express.Router();
 
-partnerRouter.use(bodyParser.json());
+// partnerRouter.use(bodyParser.json());
 // Chain route method
 partnerRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
@@ -15,6 +15,7 @@ partnerRouter.route('/')
     .then(partners => {
         res.statusCode = 200;
         res.setHeader('Contenet-Type', 'application/json');
+        res.json(partners);
     })
     .catch(err => next(err));
 })
