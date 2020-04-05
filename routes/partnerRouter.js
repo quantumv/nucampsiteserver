@@ -14,7 +14,7 @@ partnerRouter.route('/')
     Partner.find()
     .then(partners => {
         res.statusCode = 200;
-        res.setHeader('Contenet-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json');
         res.json(partners);
     })
     .catch(err => next(err));
